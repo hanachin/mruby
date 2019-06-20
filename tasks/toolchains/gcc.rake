@@ -1,6 +1,6 @@
 MRuby::Toolchain.new(:gcc) do |conf, _params|
   [conf.cc, conf.objc, conf.asm].each do |cc|
-    cc.command = ENV['CC'] || 'gcc'
+    cc.command = ENV['CC'] || 'musl-gcc'
     cc.flags = [ENV['CFLAGS'] || %w(-g -std=gnu99 -O3 -Wall -Werror-implicit-function-declaration -Wdeclaration-after-statement -Wwrite-strings -Wundef)]
     cc.option_include_path = '-I%s'
     cc.option_define = '-D%s'
@@ -20,7 +20,7 @@ MRuby::Toolchain.new(:gcc) do |conf, _params|
   end
 
   conf.linker do |linker|
-    linker.command = ENV['LD'] || ENV['CXX'] || ENV['CC'] || 'gcc'
+    linker.command = ENV['LD'] || ENV['CXX'] || ENV['CC'] || 'musl-gcc'
     linker.flags = [ENV['LDFLAGS'] || %w()]
     linker.libraries = %w(m)
     linker.library_paths = []
